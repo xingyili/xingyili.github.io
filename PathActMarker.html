@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2023-11-02" />
+<meta name="date" content="2024-04-20" />
 
 <title>The PathActMarker User’s Guide</title>
 
@@ -1828,7 +1828,7 @@ function toggle_visibility(id1) {
 <h1 class="title toc-ignore">The PathActMarker User’s Guide</h1>
 <p class="author-name">Zhelin Zhao<span class="affil-mark">*</span>, Xingyi Li<span class="affil-mark">**</span> and Jun Hao<span class="affil-mark">***</span></p>
 <p class="author-email"><span class="affil-mark">*</span><a href="mailto:zz263943@mail.nwpu.edu.cn">zz263943@mail.nwpu.edu.cn</a><br><span class="affil-mark">**</span><a href="mailto:xingyili@nwpu.edu.cn">xingyili@nwpu.edu.cn</a><br><span class="affil-mark">***</span><a href="mailto:haojun@mail.nwpu.edu.cn">haojun@mail.nwpu.edu.cn</a></p>
-<h4 class="date">2 November 2023</h4>
+<h4 class="date">20 April 2024</h4>
 <h4 class="package">Package</h4>
 <p>PathActMarker 1.0.0</p>
 
@@ -1872,7 +1872,7 @@ devtools::install_github(&quot;xingyili/PathActMarker&quot;)</code></pre>
 <li><p>exp</p>
 <p>A gene expression profile of interest (rows are genes, columns are samples).</p></li>
 <li><p>method</p>
-<p>Normalization methods:TPM, TMM, quantile, Z-score (default: Z-score).</p></li>
+<p>Normalization methods:TPM, TMM, quantile, Z-score, min-max (default: None).</p></li>
 </ul>
 </div>
 <div id="value" class="section level2" number="3.4">
@@ -1933,9 +1933,10 @@ KICHfilter = NormalizeExp(KICH)</code></pre>
 </div>
 <div id="examples-1" class="section level2" number="4.5">
 <h2><span class="header-section-number">4.5</span> Examples</h2>
-<pre class="r"><code>data(KICHfilter)
-data(HallmarkgenesetsID)
-CORGsResults = UseCORGs(KICHfilter, HallmarkgenesetsID)</code></pre>
+<pre class="r"><code>data(KICH)
+data(KEGGgenesetsID)
+KICHfilter &lt;- NormalizeExp(KICH)
+CORGsResults = UseCORGs(KICHfilter, KEGGgenesetsID)</code></pre>
 </div>
 </div>
 <div id="pathway-activation-evaluation-algorithmusegsva" class="section level1" number="5">
@@ -1986,10 +1987,10 @@ CORGsResults = UseCORGs(KICHfilter, HallmarkgenesetsID)</code></pre>
 </div>
 <div id="examples-2" class="section level2" number="5.5">
 <h2><span class="header-section-number">5.5</span> Examples</h2>
-<pre class="r"><code>data(KICHfilter)
-data(HallmarkgenesetsID)
-data(KICHcli)
-GSVAResults = UseGSVA(KICHfilter, HallmarkgenesetsID)</code></pre>
+<pre class="r"><code>data(KICH)
+data(KEGGgenesetsID)
+KICHfilter &lt;- NormalizeExp(KICH)
+GSVAResults = UseGSVA(KICHfilter, KEGGgenesetsID)</code></pre>
 </div>
 </div>
 <div id="pathway-activation-evaluation-algorithmusessgsea" class="section level1" number="6">
@@ -2040,9 +2041,10 @@ GSVAResults = UseGSVA(KICHfilter, HallmarkgenesetsID)</code></pre>
 </div>
 <div id="examples-3" class="section level2" number="6.5">
 <h2><span class="header-section-number">6.5</span> Examples</h2>
-<pre class="r"><code>data(KICHfilter)
-data(HallmarkgenesetsID)
-ssGSEAResults= UsessGSEA(KICHfilter, HallmarkgenesetsID)</code></pre>
+<pre class="r"><code>data(KICH)
+data(KEGGgenesetsID)
+KICHfilter &lt;- NormalizeExp(KICH)
+ssGSEAResults = UsessGSEA(KICHfilter, KEGGgenesetsID)</code></pre>
 </div>
 </div>
 <div id="pathway-activation-evaluation-algorithmuseplage" class="section level1" number="7">
@@ -2093,9 +2095,10 @@ ssGSEAResults= UsessGSEA(KICHfilter, HallmarkgenesetsID)</code></pre>
 </div>
 <div id="examples-4" class="section level2" number="7.5">
 <h2><span class="header-section-number">7.5</span> Examples</h2>
-<pre class="r"><code>data(KICHfilter)
-data(HallmarkgenesetsID)
-GSVAResults = UseCORGs(KICHfilter, HallmarkgenesetsID)</code></pre>
+<pre class="r"><code>data(KICH)
+data(KEGGgenesetsID)
+KICHfilter &lt;- NormalizeExp(KICH)
+PLAGEResults = UsePLAGE(KICHfilter, KEGGgenesetsID)</code></pre>
 </div>
 </div>
 <div id="pathway-activation-evaluation-algorithmuseipath" class="section level1" number="8">
@@ -2127,24 +2130,56 @@ GSVAResults = UseCORGs(KICHfilter, HallmarkgenesetsID)</code></pre>
 </div>
 <div id="examples-5" class="section level2" number="8.5">
 <h2><span class="header-section-number">8.5</span> Examples</h2>
-<pre class="r"><code>data(KICHfilter)
-data(HallmarkgenesetsID)
-iPathResults= UseiPath(KICHfilter, HallmarkgenesetsID)</code></pre>
+<pre class="r"><code>data(KICH)
+data(KEGGgenesetsID)
+KICHfilter &lt;- NormalizeExp(KICH)
+iPathResults = UseiPath(KICHfilter, KEGGgenesetsID)</code></pre>
 </div>
 </div>
-<div id="pathway-activation-evaluation-algorithmusepathifier" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Pathway activation evaluation algorithm：Usepathifier</h1>
+<div id="pathway-activation-evaluation-algorithmusesepa" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Pathway activation evaluation algorithm：UseSEPA</h1>
 <div id="description-6" class="section level2" number="9.1">
 <h2><span class="header-section-number">9.1</span> Description</h2>
-<p>pathifier uses principal component analysis (PCA) to create a feature space when calculating pathway activity values and scores the degree of dysregulation in a particular pathway for each sample based on gene expression values for different states of samples.</p>
+<p>SEPA combines the pathway structure and signal entropy theory to quantify the pathway activity of a individual sample.</p>
 </div>
 <div id="usage-6" class="section level2" number="9.2">
 <h2><span class="header-section-number">9.2</span> Usage</h2>
-<pre class="r"><code>Usepathifier (exp, paths, label = NULL, ranks = NULL, attempts = 100, maximize_stability = TRUE,    
-              logfile = &quot;&quot;, samplings=NULL, min_exp=4, min_std=0.4)</code></pre>
+<pre class="r"><code>UseSEPA(exp, pathwaySparseAdj)</code></pre>
 </div>
 <div id="arguments-6" class="section level2" number="9.3">
 <h2><span class="header-section-number">9.3</span> Arguments</h2>
+<ul>
+<li><p>exp</p>
+<p>A gene expression profile of interest (rows are genes, columns are samples).</p></li>
+<li><p>pathwaySparseAdj</p>
+<p>The pathway network.</p></li>
+</ul>
+</div>
+<div id="value-6" class="section level2" number="9.4">
+<h2><span class="header-section-number">9.4</span> Value</h2>
+<p>Pathway activity matrix (rows are pathways, columns are samples).</p>
+</div>
+<div id="examples-6" class="section level2" number="9.5">
+<h2><span class="header-section-number">9.5</span> Examples</h2>
+<pre class="r"><code>data(KICH)
+data(KEGGgenenetworkID)
+KICHfilter &lt;- NormalizeExp(KICH)
+SEPAResults &lt;- UseSEPA(KICHfilter, KEGGgenenetworkID)</code></pre>
+</div>
+</div>
+<div id="pathway-activation-evaluation-algorithmusepathifier" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Pathway activation evaluation algorithm：Usepathifier</h1>
+<div id="description-7" class="section level2" number="10.1">
+<h2><span class="header-section-number">10.1</span> Description</h2>
+<p>pathifier uses principal component analysis (PCA) to create a feature space when calculating pathway activity values and scores the degree of dysregulation in a particular pathway for each sample based on gene expression values for different states of samples.</p>
+</div>
+<div id="usage-7" class="section level2" number="10.2">
+<h2><span class="header-section-number">10.2</span> Usage</h2>
+<pre class="r"><code>Usepathifier (exp, paths, label = NULL, ranks = NULL, attempts = 100, maximize_stability = TRUE,    
+              logfile = &quot;&quot;, samplings=NULL, min_exp=4, min_std=0.4)</code></pre>
+</div>
+<div id="arguments-7" class="section level2" number="10.3">
+<h2><span class="header-section-number">10.3</span> Arguments</h2>
 <ul>
 <li><p>exp</p>
 <p>A gene expression profile of interest (rows are genes, columns are samples).</p></li>
@@ -2168,33 +2203,33 @@ iPathResults= UseiPath(KICHfilter, HallmarkgenesetsID)</code></pre>
 <p>The minimal allowed standard deviation of each gene.</p></li>
 </ul>
 </div>
-<div id="value-6" class="section level2" number="9.4">
-<h2><span class="header-section-number">9.4</span> Value</h2>
+<div id="value-7" class="section level2" number="10.4">
+<h2><span class="header-section-number">10.4</span> Value</h2>
 <p>Pathway activity matrix (rows are pathways, columns are samples).</p>
 </div>
-<div id="examples-6" class="section level2" number="9.5">
-<h2><span class="header-section-number">9.5</span> Examples</h2>
-<pre class="r"><code>data(KICHfilter)
-data(KICHcli)
-data(HallmarkgenesetsID)
-pathifierResults = Usepathifier(KICHfilter, HallmarkgenesetsID[1:10],KICHcli[3,])</code></pre>
+<div id="examples-7" class="section level2" number="10.5">
+<h2><span class="header-section-number">10.5</span> Examples</h2>
+<pre class="r"><code>data(KICH)
+data(KEGGgenesetsID)
+KICHfilter &lt;- NormalizeExp(KICH)
+pathifierResults = Usepathifier(KICHfilter, KEGGgenesetsID)</code></pre>
 </div>
 </div>
-<div id="pathway-activation-evaluation-algorithmuseplier" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Pathway activation evaluation algorithm：UsePLIER</h1>
-<div id="description-7" class="section level2" number="10.1">
-<h2><span class="header-section-number">10.1</span> Description</h2>
+<div id="pathway-activation-evaluation-algorithmuseplier" class="section level1" number="11">
+<h1><span class="header-section-number">11</span> Pathway activation evaluation algorithm：UsePLIER</h1>
+<div id="description-8" class="section level2" number="11.1">
+<h2><span class="header-section-number">11.1</span> Description</h2>
 <p>PLIER performs an unsupervised data structure deconvolution and mapping to prior knowledge, and identifies regulation in cell-type proportions or pathway activity while reducing technical noise.</p>
 </div>
-<div id="usage-7" class="section level2" number="10.2">
-<h2><span class="header-section-number">10.2</span> Usage</h2>
+<div id="usage-8" class="section level2" number="11.2">
+<h2><span class="header-section-number">11.2</span> Usage</h2>
 <pre class="r"><code>UsePLIER(exp, pathwaylist,summary=F,svdres=NULL, k=NULL, L1=NULL, L2=NULL, L3=NULL, frac=0.7, max.iter=350, 
          trace=F, scale=T, Chat=NULL, maxPath=10, doCrossval=T, penalty_factor=rep(1,ncol(pathwaylist)), 
          glm_alpha=0.9, minGenes=10, tol=1e-6, seed=123456, allGenes=F, rseed=NULL, 
          pathwaySelection=c(&quot;complete&quot;, &quot;fast&quot;))</code></pre>
 </div>
-<div id="arguments-7" class="section level2" number="10.3">
-<h2><span class="header-section-number">10.3</span> Arguments</h2>
+<div id="arguments-8" class="section level2" number="11.3">
+<h2><span class="header-section-number">11.3</span> Arguments</h2>
 <ul>
 <li><p>exp</p>
 <p>A gene expression profile of interest (rows are genes, columns are samples).</p></li>
@@ -2244,29 +2279,30 @@ pathifierResults = Usepathifier(KICHfilter, HallmarkgenesetsID[1:10],KICHcli[3,]
 <p>Pathways to be optimized with elstic-net penalty are preselected based on ridge regression results. “Complete” uses all top pathways to fit individual LVs.</p></li>
 </ul>
 </div>
-<div id="value-7" class="section level2" number="10.4">
-<h2><span class="header-section-number">10.4</span> Value</h2>
+<div id="value-8" class="section level2" number="11.4">
+<h2><span class="header-section-number">11.4</span> Value</h2>
 <p>Pathway activity matrix (rows are pathways, columns are samples).</p>
 </div>
-<div id="examples-7" class="section level2" number="10.5">
-<h2><span class="header-section-number">10.5</span> Examples</h2>
-<pre class="r"><code>data(KICHfilter)
-data(HallmarkgenesetsID)
-PLIERResults = UsePLIER(KICHfilter, HallmarkgenesetsID)</code></pre>
+<div id="examples-8" class="section level2" number="11.5">
+<h2><span class="header-section-number">11.5</span> Examples</h2>
+<pre class="r"><code>data(KICH)
+data(KEGGgenesetsID)
+KICHfilter &lt;- NormalizeExp(KICH)
+PLIERResults = UsePLIER(KICHfilter, KEGGgenesetsID)</code></pre>
 </div>
 </div>
-<div id="feature-importance-ranking-obtained-by-machine-learning." class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Feature importance ranking obtained by machine learning.</h1>
-<div id="description-8" class="section level2" number="11.1">
-<h2><span class="header-section-number">11.1</span> Description</h2>
+<div id="feature-importance-ranking-obtained-by-machine-learning." class="section level1" number="12">
+<h1><span class="header-section-number">12</span> Feature importance ranking obtained by machine learning.</h1>
+<div id="description-9" class="section level2" number="12.1">
+<h2><span class="header-section-number">12.1</span> Description</h2>
 <p>This function uses machine learning algorithm to get the feature importance ranking based on caret package.</p>
 </div>
-<div id="usage-8" class="section level2" number="11.2">
-<h2><span class="header-section-number">11.2</span> Usage</h2>
+<div id="usage-9" class="section level2" number="12.2">
+<h2><span class="header-section-number">12.2</span> Usage</h2>
 <pre class="r"><code>FeatureImportance(iES_mat, label, type = &quot;rf&quot;)</code></pre>
 </div>
-<div id="arguments-8" class="section level2" number="11.3">
-<h2><span class="header-section-number">11.3</span> Arguments</h2>
+<div id="arguments-9" class="section level2" number="12.3">
+<h2><span class="header-section-number">12.3</span> Arguments</h2>
 <ul>
 <li><p>iES_mat</p>
 <p>The iES_mat obtained by pathway activation evaluation algorithms.</p></li>
@@ -2276,29 +2312,29 @@ PLIERResults = UsePLIER(KICHfilter, HallmarkgenesetsID)</code></pre>
 <p>Machine learning algorithms, including Random Forest, Linear Regression, Logistic Regression, k-Nearest Neighbors, etc., default random forest.</p></li>
 </ul>
 </div>
-<div id="value-8" class="section level2" number="11.4">
-<h2><span class="header-section-number">11.4</span> Value</h2>
+<div id="value-9" class="section level2" number="12.4">
+<h2><span class="header-section-number">12.4</span> Value</h2>
 <p>The feature(pathway) importance ranking.</p>
 </div>
-<div id="examples-8" class="section level2" number="11.5">
-<h2><span class="header-section-number">11.5</span> Examples</h2>
+<div id="examples-9" class="section level2" number="12.5">
+<h2><span class="header-section-number">12.5</span> Examples</h2>
 <pre class="r"><code>data(GSVAResults)
 data(KICHcli)
 PathwayImportance = FeatureImportance(GSVAResults, label = KICHcli[3,] )</code></pre>
 </div>
 </div>
-<div id="significance-ranking-of-survival-differences-between-disturbed-and-normal-like-samples" class="section level1" number="12">
-<h1><span class="header-section-number">12</span> Significance ranking of survival differences between disturbed and normal-like samples</h1>
-<div id="description-9" class="section level2" number="12.1">
-<h2><span class="header-section-number">12.1</span> Description</h2>
+<div id="significance-ranking-of-survival-differences-between-disturbed-and-normal-like-samples" class="section level1" number="13">
+<h1><span class="header-section-number">13</span> Significance ranking of survival differences between disturbed and normal-like samples</h1>
+<div id="description-10" class="section level2" number="13.1">
+<h2><span class="header-section-number">13.1</span> Description</h2>
 <p>This function uses survival analysis to statistically analyze the survival status of disturbed and normal-like samples in different pathways.</p>
 </div>
-<div id="usage-9" class="section level2" number="12.2">
-<h2><span class="header-section-number">12.2</span> Usage</h2>
+<div id="usage-10" class="section level2" number="13.2">
+<h2><span class="header-section-number">13.2</span> Usage</h2>
 <pre class="r"><code>FeatureImportanceKM(iES_mat, cli, samplenum = 10) </code></pre>
 </div>
-<div id="arguments-9" class="section level2" number="12.3">
-<h2><span class="header-section-number">12.3</span> Arguments</h2>
+<div id="arguments-10" class="section level2" number="13.3">
+<h2><span class="header-section-number">13.3</span> Arguments</h2>
 <ul>
 <li><p>iES_mat</p>
 <p>The iES_mat obtained by pathway activation algorithms.</p></li>
@@ -2308,29 +2344,29 @@ PathwayImportance = FeatureImportance(GSVAResults, label = KICHcli[3,] )</code><
 <p>Minimum number of normal-like and perturbed samples.</p></li>
 </ul>
 </div>
-<div id="value-9" class="section level2" number="12.4">
-<h2><span class="header-section-number">12.4</span> Value</h2>
+<div id="value-10" class="section level2" number="13.4">
+<h2><span class="header-section-number">13.4</span> Value</h2>
 <p>The survival difference(p-value) between normal-likeand and disturbed samples.</p>
 </div>
-<div id="examples-9" class="section level2" number="12.5">
-<h2><span class="header-section-number">12.5</span> Examples</h2>
+<div id="examples-10" class="section level2" number="13.5">
+<h2><span class="header-section-number">13.5</span> Examples</h2>
 <pre class="r"><code>data(GSVAResults)
 data(KICHcli)
 PathwayImportance = FeatureImportanceKM(GSVAResults, KICHcli )</code></pre>
 </div>
 </div>
-<div id="plot-a-heatmap-of-the-pathway-activity-matrix" class="section level1" number="13">
-<h1><span class="header-section-number">13</span> Plot a heatmap of the pathway activity matrix</h1>
-<div id="description-10" class="section level2" number="13.1">
-<h2><span class="header-section-number">13.1</span> Description</h2>
+<div id="plot-a-heatmap-of-the-pathway-activity-matrix" class="section level1" number="14">
+<h1><span class="header-section-number">14</span> Plot a heatmap of the pathway activity matrix</h1>
+<div id="description-11" class="section level2" number="14.1">
+<h2><span class="header-section-number">14.1</span> Description</h2>
 <p>This function is used to visualize the heat map of the pathway activity matrix.</p>
 </div>
-<div id="usage-10" class="section level2" number="13.2">
-<h2><span class="header-section-number">13.2</span> Usage</h2>
+<div id="usage-11" class="section level2" number="14.2">
+<h2><span class="header-section-number">14.2</span> Usage</h2>
 <pre class="r"><code>PlotHeatmap (iES_mat, label, condition = TRUE ,title = NA)</code></pre>
 </div>
-<div id="arguments-10" class="section level2" number="13.3">
-<h2><span class="header-section-number">13.3</span> Arguments</h2>
+<div id="arguments-11" class="section level2" number="14.3">
+<h2><span class="header-section-number">14.3</span> Arguments</h2>
 <ul>
 <li><p>iES_mat</p>
 <p>The iES_mat obtained by pathway activation evaluation algorithms.</p></li>
@@ -2342,60 +2378,26 @@ PathwayImportance = FeatureImportanceKM(GSVAResults, KICHcli )</code></pre>
 <p>A string representing the title of the heat map.</p></li>
 </ul>
 </div>
-<div id="value-10" class="section level2" number="13.4">
-<h2><span class="header-section-number">13.4</span> Value</h2>
-<p>The heatmap.</p>
-</div>
-<div id="examples-10" class="section level2" number="13.5">
-<h2><span class="header-section-number">13.5</span> Examples</h2>
-<pre class="r"><code>data(GSVAResults)
-data(KICHcli)
-PlotHeatmap(GSVAResults, label = KICHcli[3,])</code></pre>
-</div>
-</div>
-<div id="visualize-the-waterfall-of-a-specified-pathway." class="section level1" number="14">
-<h1><span class="header-section-number">14</span> visualize the waterfall of a specified pathway.</h1>
-<div id="description-11" class="section level2" number="14.1">
-<h2><span class="header-section-number">14.1</span> Description</h2>
-<p>This function is used to visualize the waterfall of a specified pathway.</p>
-</div>
-<div id="usage-11" class="section level2" number="14.2">
-<h2><span class="header-section-number">14.2</span> Usage</h2>
-<pre class="r"><code>PlotWaterfall (iES_mat, path_name,label, title = TRUE)</code></pre>
-</div>
-<div id="arguments-11" class="section level2" number="14.3">
-<h2><span class="header-section-number">14.3</span> Arguments</h2>
-<ul>
-<li><p>iES_mat</p>
-<p>The iES_mat obtained by pathway activation evaluation algorithms.</p></li>
-<li><p>path_name</p>
-<p>The pathway name.</p></li>
-<li><p>label</p>
-<p>Normal(0) and tumor (1) in patient samples.</p></li>
-<li><p>title</p>
-<p>Boolean true or false for including the title (path_name) in the Waterfall plot.</p></li>
-</ul>
-</div>
 <div id="value-11" class="section level2" number="14.4">
 <h2><span class="header-section-number">14.4</span> Value</h2>
-<p>The waterfall.</p>
+<p>The heatmap.</p>
 </div>
 <div id="examples-11" class="section level2" number="14.5">
 <h2><span class="header-section-number">14.5</span> Examples</h2>
 <pre class="r"><code>data(GSVAResults)
 data(KICHcli)
-PlotWaterfall(GSVAResults, path_name = &quot;HALLMARK_PI3K_AKT_MTOR_SIGNALING&quot; , label = KICHcli[3,] )</code></pre>
+PlotHeatmap(GSVAResults, label = KICHcli[3,])</code></pre>
 </div>
 </div>
-<div id="visualize-the-densityfallof-a-specified-pathway." class="section level1" number="15">
-<h1><span class="header-section-number">15</span> visualize the densityfallof a specified pathway.</h1>
+<div id="visualize-the-waterfall-of-a-specified-pathway." class="section level1" number="15">
+<h1><span class="header-section-number">15</span> visualize the waterfall of a specified pathway.</h1>
 <div id="description-12" class="section level2" number="15.1">
 <h2><span class="header-section-number">15.1</span> Description</h2>
-<p>This function is used to visualize the densityfall of a specified pathway.</p>
+<p>This function is used to visualize the waterfall of a specified pathway.</p>
 </div>
 <div id="usage-12" class="section level2" number="15.2">
 <h2><span class="header-section-number">15.2</span> Usage</h2>
-<pre class="r"><code>PlotDensityfall(iES_mat, path_name,label, title = TRUE)</code></pre>
+<pre class="r"><code>PlotWaterfall (iES_mat, path_name,label, title = TRUE)</code></pre>
 </div>
 <div id="arguments-12" class="section level2" number="15.3">
 <h2><span class="header-section-number">15.3</span> Arguments</h2>
@@ -2407,32 +2409,111 @@ PlotWaterfall(GSVAResults, path_name = &quot;HALLMARK_PI3K_AKT_MTOR_SIGNALING&qu
 <li><p>label</p>
 <p>Normal(0) and tumor (1) in patient samples.</p></li>
 <li><p>title</p>
-<p>Boolean true or false for including the title (path_name) in the densityfall plot.</p></li>
+<p>Boolean true or false for including the title (path_name) in the Waterfall plot.</p></li>
 </ul>
 </div>
 <div id="value-12" class="section level2" number="15.4">
 <h2><span class="header-section-number">15.4</span> Value</h2>
-<p>The densityfall.</p>
+<p>The waterfall.</p>
 </div>
 <div id="examples-12" class="section level2" number="15.5">
 <h2><span class="header-section-number">15.5</span> Examples</h2>
 <pre class="r"><code>data(GSVAResults)
 data(KICHcli)
-PlotDensityfall(GSVAResults, path_name = &quot;HALLMARK_PI3K_AKT_MTOR_SIGNALING&quot;, label = KICHcli[3,] )</code></pre>
+PlotWaterfall(GSVAResults, path_name = &quot;HALLMARK_PI3K_AKT_MTOR_SIGNALING&quot; , label = KICHcli[3,] )</code></pre>
 </div>
 </div>
-<div id="visualize-the-kaplan-meierkm-survival-curve-of-a-specified-pathway." class="section level1" number="16">
-<h1><span class="header-section-number">16</span> visualize the Kaplan-Meier(KM) survival curve of a specified pathway.</h1>
+<div id="visualize-the-radar-plot." class="section level1" number="16">
+<h1><span class="header-section-number">16</span> visualize the radar plot.</h1>
 <div id="description-13" class="section level2" number="16.1">
 <h2><span class="header-section-number">16.1</span> Description</h2>
-<p>This function is used to visualize the Kaplan-Meier(KM) survival curve of a specified pathway.</p>
+<p>This function is used to visualize the radar plot.</p>
 </div>
 <div id="usage-13" class="section level2" number="16.2">
 <h2><span class="header-section-number">16.2</span> Usage</h2>
-<pre class="r"><code>PlotiESSurv(iES_mat,cli, path_name, sample_num = 20, title = TRUE)</code></pre>
+<pre class="r"><code>PlotRadar (performanceScores)</code></pre>
 </div>
 <div id="arguments-13" class="section level2" number="16.3">
 <h2><span class="header-section-number">16.3</span> Arguments</h2>
+<ul>
+<li><p>performanceScores</p>
+<p>A data frame, rows are all methods, cols are all scores.</p></li>
+</ul>
+</div>
+<div id="value-13" class="section level2" number="16.4">
+<h2><span class="header-section-number">16.4</span> Value</h2>
+<p>The radar plot.</p>
+</div>
+<div id="examples-13" class="section level2" number="16.5">
+<h2><span class="header-section-number">16.5</span> Examples</h2>
+<pre class="r"><code>data(KICH)
+data(KEGGgenesetsID)
+data(KICHcli)
+KICHfilter &lt;- NormalizeExp(KICH)
+GSVARunningTimeScore &lt;- GetRunningTimeScore(UseGSVA, KICHfilter, KEGGgenesetsID)
+GSVApathway_ret &lt;- UseGSVA(KICHfilter, KEGGgenesetsID)
+GSVAReproducibilityScore &lt;- GetReproducibilityScore(KICHfilter, GSVApathway_ret)
+GSVAROCAUCscore &lt;- GetROCAUCscore(as.data.frame(t(GSVApathway_ret)), as.data.frame(t(KICHcli[3,])))
+CORGsRunningTimeScore &lt;- GetRunningTimeScore(UseCORGs, KICHfilter, KEGGgenesetsID)
+CORGspathway_ret &lt;- UseCORGs(KICHfilter, KEGGgenesetsID)
+CORGsReproducibilityScore &lt;- GetReproducibilityScore(KICHfilter, CORGspathway_ret)
+CORGsROCAUCscore &lt;- GetROCAUCscore(as.data.frame(t(CORGspathway_ret)), as.data.frame(t(KICHcli[3,])))
+ssGSEARunningTimeScore &lt;- GetRunningTimeScore(UsessGSEA, KICHfilter, KEGGgenesetsID)
+ssGSEApathway_ret &lt;- UsessGSEA(KICHfilter, KEGGgenesetsID)
+ssGSEAReproducibilityScore &lt;- GetReproducibilityScore(KICHfilter, ssGSEApathway_ret)
+ssGSEAROCAUCscore &lt;- GetROCAUCscore(as.data.frame(t(ssGSEApathway_ret)), as.data.frame(t(KICHcli[3,])))
+PlotRadar(data.frame(t(data.frame(row.names = c(&quot;RunningTimeScore&quot;, &quot;ReproducibilityScore&quot;, &quot;ROCAUCscore&quot;),
+                                 GSVA = c(GSVARunningTimeScore, GSVAReproducibilityScore, GSVAROCAUCscore),
+                                 CORGs = c(CORGsRunningTimeScore, CORGsReproducibilityScore, CORGsROCAUCscore),
+                                 ssGSEA = c(ssGSEARunningTimeScore, ssGSEAReproducibilityScore, ssGSEAROCAUCscore)))))</code></pre>
+</div>
+</div>
+<div id="visualize-the-densityfallof-a-specified-pathway." class="section level1" number="17">
+<h1><span class="header-section-number">17</span> visualize the densityfallof a specified pathway.</h1>
+<div id="description-14" class="section level2" number="17.1">
+<h2><span class="header-section-number">17.1</span> Description</h2>
+<p>This function is used to visualize the densityfall of a specified pathway.</p>
+</div>
+<div id="usage-14" class="section level2" number="17.2">
+<h2><span class="header-section-number">17.2</span> Usage</h2>
+<pre class="r"><code>PlotDensityfall(iES_mat, path_name,label, title = TRUE)</code></pre>
+</div>
+<div id="arguments-14" class="section level2" number="17.3">
+<h2><span class="header-section-number">17.3</span> Arguments</h2>
+<ul>
+<li><p>iES_mat</p>
+<p>The iES_mat obtained by pathway activation evaluation algorithms.</p></li>
+<li><p>path_name</p>
+<p>The pathway name.</p></li>
+<li><p>label</p>
+<p>Normal(0) and tumor (1) in patient samples.</p></li>
+<li><p>title</p>
+<p>Boolean true or false for including the title (path_name) in the densityfall plot.</p></li>
+</ul>
+</div>
+<div id="value-14" class="section level2" number="17.4">
+<h2><span class="header-section-number">17.4</span> Value</h2>
+<p>The densityfall.</p>
+</div>
+<div id="examples-14" class="section level2" number="17.5">
+<h2><span class="header-section-number">17.5</span> Examples</h2>
+<pre class="r"><code>data(GSVAResults)
+data(KICHcli)
+PlotDensityfall(GSVAResults, path_name = &quot;HALLMARK_PI3K_AKT_MTOR_SIGNALING&quot;, label = KICHcli[3,] )</code></pre>
+</div>
+</div>
+<div id="visualize-the-kaplan-meierkm-survival-curve-of-a-specified-pathway." class="section level1" number="18">
+<h1><span class="header-section-number">18</span> visualize the Kaplan-Meier(KM) survival curve of a specified pathway.</h1>
+<div id="description-15" class="section level2" number="18.1">
+<h2><span class="header-section-number">18.1</span> Description</h2>
+<p>This function is used to visualize the Kaplan-Meier(KM) survival curve of a specified pathway.</p>
+</div>
+<div id="usage-15" class="section level2" number="18.2">
+<h2><span class="header-section-number">18.2</span> Usage</h2>
+<pre class="r"><code>PlotiESSurv(iES_mat,cli, path_name, sample_num = 20, title = TRUE)</code></pre>
+</div>
+<div id="arguments-15" class="section level2" number="18.3">
+<h2><span class="header-section-number">18.3</span> Arguments</h2>
 <ul>
 <li><p>iES_mat</p>
 <p>The iES_mat obtained by pathway activation algorithms.</p></li>
@@ -2446,29 +2527,125 @@ PlotDensityfall(GSVAResults, path_name = &quot;HALLMARK_PI3K_AKT_MTOR_SIGNALING&
 <p>Boolean true or false for including the title (path_name) in the KM survival plot.</p></li>
 </ul>
 </div>
-<div id="value-13" class="section level2" number="16.4">
-<h2><span class="header-section-number">16.4</span> Value</h2>
+<div id="value-15" class="section level2" number="18.4">
+<h2><span class="header-section-number">18.4</span> Value</h2>
 <p>The KM survival curve.</p>
 </div>
-<div id="examples-13" class="section level2" number="16.5">
-<h2><span class="header-section-number">16.5</span> Examples</h2>
+<div id="examples-15" class="section level2" number="18.5">
+<h2><span class="header-section-number">18.5</span> Examples</h2>
 <pre class="r"><code>data(GSVAResults)
 data(KICHcli)
 PlotiESSurv(GSVAResults, cli = KICHcli, path_name = &quot;HALLMARK_PI3K_AKT_MTOR_SIGNALING&quot;)</code></pre>
 </div>
 </div>
-<div id="obtain-the-adjusted-rand-index-ari-score" class="section level1" number="17">
-<h1><span class="header-section-number">17</span> Obtain the adjusted rand index (ARI) score</h1>
-<div id="description-14" class="section level2" number="17.1">
-<h2><span class="header-section-number">17.1</span> Description</h2>
+<div id="method-evaluation-running-time" class="section level1" number="19">
+<h1><span class="header-section-number">19</span> Method evaluation: Running time</h1>
+<div id="description-16" class="section level2" number="19.1">
+<h2><span class="header-section-number">19.1</span> Description</h2>
+<p>This function is used to obtain the running time score.</p>
+</div>
+<div id="usage-16" class="section level2" number="19.2">
+<h2><span class="header-section-number">19.2</span> Usage</h2>
+<pre class="r"><code>GetRunningTimeScore (func = NA, ...)</code></pre>
+</div>
+<div id="arguments-16" class="section level2" number="19.3">
+<h2><span class="header-section-number">19.3</span> Arguments</h2>
+<ul>
+<li><p>func</p>
+<p>The function that wants to evaluate running time.</p></li>
+<li><p>…</p>
+<p>The param list of function.</p></li>
+</ul>
+</div>
+<div id="value-16" class="section level2" number="19.4">
+<h2><span class="header-section-number">19.4</span> Value</h2>
+<p>The running time score of the method.</p>
+</div>
+<div id="examples-16" class="section level2" number="19.5">
+<h2><span class="header-section-number">19.5</span> Examples</h2>
+<pre class="r"><code>data(KICH)
+data(KEGGgenesetsID)
+KICHfilter &lt;- NormalizeExp(KICH)
+RunningTimeScore &lt;- GetRunningTimeScore(UseGSVA, KICHfilter, KEGGgenesetsID)</code></pre>
+</div>
+</div>
+<div id="method-evaluation-reproducibility-score" class="section level1" number="20">
+<h1><span class="header-section-number">20</span> Method evaluation: Reproducibility score</h1>
+<div id="description-17" class="section level2" number="20.1">
+<h2><span class="header-section-number">20.1</span> Description</h2>
+<p>This function is used to obtain the reproducibility score.</p>
+</div>
+<div id="usage-17" class="section level2" number="20.2">
+<h2><span class="header-section-number">20.2</span> Usage</h2>
+<pre class="r"><code>GetReproducibilityScore (exp, iES_mat)</code></pre>
+</div>
+<div id="arguments-17" class="section level2" number="20.3">
+<h2><span class="header-section-number">20.3</span> Arguments</h2>
+<ul>
+<li><p>exp</p>
+<p>The function that wants to evaluate running time.</p></li>
+<li><p>iES_mat</p>
+<p>The iES_mat obtained by pathway activation evaluation algorithms.</p></li>
+</ul>
+</div>
+<div id="value-17" class="section level2" number="20.4">
+<h2><span class="header-section-number">20.4</span> Value</h2>
+<p>The reproducibility score.</p>
+</div>
+<div id="examples-17" class="section level2" number="20.5">
+<h2><span class="header-section-number">20.5</span> Examples</h2>
+<pre class="r"><code>data(KICH)
+data(KEGGgenesetsID)
+KICHfilter &lt;- NormalizeExp(KICH)
+pathway_ret &lt;- UseGSVA(KICHfilter, KEGGgenesetsID)
+ReproducibilityScore &lt;- GetReproducibilityScore(KICHfilter, pathway_ret)</code></pre>
+</div>
+</div>
+<div id="method-evaluation-roc-auc" class="section level1" number="21">
+<h1><span class="header-section-number">21</span> Method evaluation: ROC AUC</h1>
+<div id="description-18" class="section level2" number="21.1">
+<h2><span class="header-section-number">21.1</span> Description</h2>
+<p>This function is used to obtain the ROC AUC.</p>
+</div>
+<div id="usage-18" class="section level2" number="21.2">
+<h2><span class="header-section-number">21.2</span> Usage</h2>
+<pre class="r"><code>GetROCAUCscore (sample_feature, sample_labels)</code></pre>
+</div>
+<div id="arguments-18" class="section level2" number="21.3">
+<h2><span class="header-section-number">21.3</span> Arguments</h2>
+<ul>
+<li><p>sample_feature</p>
+<p>A data frame. The row subscript is the index of the sample. The column subscript is the index of each feature.</p></li>
+<li><p>sample_labels</p>
+<p>A data frame. The row subscript is the index of the sample. Only one column represents the label.</p></li>
+</ul>
+</div>
+<div id="value-18" class="section level2" number="21.4">
+<h2><span class="header-section-number">21.4</span> Value</h2>
+<p>ROC AUC score.</p>
+</div>
+<div id="examples-18" class="section level2" number="21.5">
+<h2><span class="header-section-number">21.5</span> Examples</h2>
+<pre class="r"><code>data(KICH)
+data(KICHcli)
+data(KEGGgenesetsID)
+KICHfilter &lt;- NormalizeExp(KICH)
+pathway_ret &lt;- UseCORGs(KICHfilter, KEGGgenesetsID)
+ROCAUCscore &lt;- GetROCAUCscore(as.data.frame(t(pathway_ret)), as.data.frame(t(KICHcli[3,])))</code></pre>
+</div>
+</div>
+<div id="obtain-the-adjusted-rand-index-ari-score" class="section level1" number="22">
+<h1><span class="header-section-number">22</span> Obtain the adjusted rand index (ARI) score</h1>
+<div id="description-19" class="section level2" number="22.1">
+<h2><span class="header-section-number">22.1</span> Description</h2>
 <p>This function is used to obtain the adjusted rand index (ARI) score.</p>
 </div>
-<div id="usage-14" class="section level2" number="17.2">
-<h2><span class="header-section-number">17.2</span> Usage</h2>
+<div id="usage-19" class="section level2" number="22.2">
+<h2><span class="header-section-number">22.2</span> Usage</h2>
 <pre class="r"><code>GetARIscore (iES_mat, label, samplenum = 20,n_iter = 50)</code></pre>
 </div>
-<div id="arguments-14" class="section level2" number="17.3">
-<h2><span class="header-section-number">17.3</span> Arguments</h2>
+<div id="arguments-19" class="section level2" number="22.3">
+<h2><span class="header-section-number">22.3</span> Arguments</h2>
 <ul>
 <li><p>iES_mat</p>
 <p>The iES_mat obtained by pathway activation evaluation algorithms.</p></li>
@@ -2480,29 +2657,29 @@ PlotiESSurv(GSVAResults, cli = KICHcli, path_name = &quot;HALLMARK_PI3K_AKT_MTOR
 <p>Number of repeated experiments</p></li>
 </ul>
 </div>
-<div id="value-14" class="section level2" number="17.4">
-<h2><span class="header-section-number">17.4</span> Value</h2>
+<div id="value-19" class="section level2" number="22.4">
+<h2><span class="header-section-number">22.4</span> Value</h2>
 <p>The ARI score.</p>
 </div>
-<div id="examples-14" class="section level2" number="17.5">
-<h2><span class="header-section-number">17.5</span> Examples</h2>
+<div id="examples-19" class="section level2" number="22.5">
+<h2><span class="header-section-number">22.5</span> Examples</h2>
 <pre class="r"><code>data(GSVAResults)
 data(KICHcli)
 GSVAARIscore = GetARIscore(GSVAResults, label = KICHcli[3,] )</code></pre>
 </div>
 </div>
-<div id="visualize-the-ggviolin-plot-of-ari-scores." class="section level1" number="18">
-<h1><span class="header-section-number">18</span> visualize the ggviolin plot of ARI scores.</h1>
-<div id="description-15" class="section level2" number="18.1">
-<h2><span class="header-section-number">18.1</span> Description</h2>
+<div id="visualize-the-ggviolin-plot-of-ari-scores." class="section level1" number="23">
+<h1><span class="header-section-number">23</span> visualize the ggviolin plot of ARI scores.</h1>
+<div id="description-20" class="section level2" number="23.1">
+<h2><span class="header-section-number">23.1</span> Description</h2>
 <p>This function is used to visualize the ggviolin plot of ARI scores obtained by different pathway activation algorithms.</p>
 </div>
-<div id="usage-15" class="section level2" number="18.2">
-<h2><span class="header-section-number">18.2</span> Usage</h2>
+<div id="usage-20" class="section level2" number="23.2">
+<h2><span class="header-section-number">23.2</span> Usage</h2>
 <pre class="r"><code>plotggviolin (ARIscores, compare = F)</code></pre>
 </div>
-<div id="arguments-15" class="section level2" number="18.3">
-<h2><span class="header-section-number">18.3</span> Arguments</h2>
+<div id="arguments-20" class="section level2" number="23.3">
+<h2><span class="header-section-number">23.3</span> Arguments</h2>
 <ul>
 <li><p>ARIscores</p>
 <p>A two-column matrix, the first column(methods) and the second column(ARI value)</p></li>
@@ -2510,12 +2687,12 @@ GSVAARIscore = GetARIscore(GSVAResults, label = KICHcli[3,] )</code></pre>
 <p>Boolean value indicating whether statistical tests are performed for comparison between groups.</p></li>
 </ul>
 </div>
-<div id="value-15" class="section level2" number="18.4">
-<h2><span class="header-section-number">18.4</span> Value</h2>
+<div id="value-20" class="section level2" number="23.4">
+<h2><span class="header-section-number">23.4</span> Value</h2>
 <p>The ggviolin plot.</p>
 </div>
-<div id="examples-15" class="section level2" number="18.5">
-<h2><span class="header-section-number">18.5</span> Examples</h2>
+<div id="examples-20" class="section level2" number="23.5">
+<h2><span class="header-section-number">23.5</span> Examples</h2>
 <pre class="r"><code>data(ARIscores)
 plotggviolin(ARIscores)</code></pre>
 </div>
